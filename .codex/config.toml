@@ -1,0 +1,17 @@
+# BEGIN OIKAWALAB AGENT HARNESS PERMISSIONS
+default_permissions = "oikawalab-repository"
+
+[permissions.oikawalab-repository]
+description = "OikawaLab MATLAB repository development with Git integration."
+extends = ":workspace"
+
+[permissions.oikawalab-repository.filesystem.":workspace_roots"]
+".git" = "write"
+".codex/agents" = "write"
+
+[permissions.oikawalab-repository.network]
+enabled = true
+
+[permissions.oikawalab-repository.network.domains]
+"*" = "allow"
+# END OIKAWALAB AGENT HARNESS PERMISSIONS

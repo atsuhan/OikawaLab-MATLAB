@@ -1,0 +1,24 @@
+# CI — checkcode警告0 + 全テスト (matlab -batch "buildtool" と同一定義)
+# Publicリポジトリでは matlab-actions がMATLABライセンスを自動供給するため、
+# ライセンス手続き不要・無料で実行できる (2026-08時点の公式仕様)。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025a
+          products: Signal_Processing_Toolbox
+      - uses: matlab-actions/run-build@v3
