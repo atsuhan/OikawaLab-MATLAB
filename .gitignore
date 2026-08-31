@@ -1,0 +1,65 @@
+# === MATLAB 生成物 ===
+*.asv
+*.m~
+*.autosave
+*.mex*
+*.mlappinstall
+*.mltbx
+*.slxc
+slprj/
+sccprj/
+codegen/
+helpsearch*/
+
+# === データファイル(リポジトリにデータはコミットしない) ===
+*.mat
+*.wav
+*.flac
+*.mp3
+*.mp4
+*.avi
+*.csv
+*.fig
+*.pdf
+*.png
+*.PNG
+*.jpg
+*.jpeg
+*.bmp
+*.tif
+*.tiff
+*.svg
+*.eps
+# docs 用に画像が必要になったら !docs/assets/** のように個別解除する
+
+# === 生成フォルダ(実験データ・中間・成果物) ===
+**/Input/
+**/Cache/
+**/Export/
+
+# === Reports の図実体 / References のPDF実体 ===
+Reports/*/assets/
+References/_local/
+
+# === OS / IDE ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# === Claude Code / Codex(個人設定のみ除外。チーム共有分は追跡) ===
+.claude/settings.local.json
+.claude/*.local.json
+.claude/plans/
+
+# === Python(補助スクリプト用) ===
+__pycache__/
+*.pyc
+
+# === 一時ファイル ===
+*.tmp
+*.bak
+*.log
+
+# === .gitkeep は常に追跡 ===
+!**/.gitkeep
