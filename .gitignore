@@ -33,13 +33,14 @@ helpsearch*/
 # docs 用に画像が必要になったら !docs/assets/** のように個別解除する
 
 # === 生成フォルダ(実験データ・中間・成果物) ===
-**/Input/
-**/Cache/
-**/Export/
+# ディレクトリ丸ごとではなく中身を除外する(.gitkeepを残すため)
+**/Input/*
+**/Cache/*
+**/Export/*
 
 # === Reports の図実体 / References のPDF実体 ===
-Reports/*/assets/
-References/_local/
+Reports/*/assets/*
+References/_local/*
 
 # === OS / IDE ===
 .DS_Store
