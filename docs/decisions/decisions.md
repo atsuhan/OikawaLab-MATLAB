@@ -12,3 +12,11 @@
 - **D5 Gitワークフロー**: 標準完了範囲はPR作成まで。自動mergeは学生複数名の運用では採用しない(INSPIREIハーネスからの意図的変更)。
 - **D6 development-loop(自走ループ)Skill**: 初版では同梱しない(CONSIDER)。学生初心者×自律ループは事故要因が大きく、質問優先設計と相性が悪い。運用が安定したら再検討。
 - **D7 MCP**: コミットするのはパス非依存のarxiv-mcp-serverのみ。MATLAB Agentic Toolkitは1ユーザー1インストール原則のため各自導入(docs/setup/)。
+
+## 2026-09-01: リポジトリを OikawaLab-MATLAB に改名し、構造を簡素化
+
+- 改名: OikawaLab-MATLABBase → OikawaLab-MATLAB(GitHub・ローカルフォルダとも)。
+- Functions/ は汎用基盤(Core / IO / Plot)のみに縮小。音響解析関数(旧 Functions/Analysis + GenerateSyntheticImpulseResponse)は Sample/20260101_Demo_残響時間解析/common/ へ移動。「2実験以上で使ってから昇格」の原則に合わせた。
+- テスト(AcousticsTest / SignalProcessingTest)は PathFixture でSample commonを参照し、カバレッジは維持。
+- Cache/RunCached は必須契約から任意の道具に格下げ。Proc番号規約は「Proc00=前準備、Proc01〜本線、Run.mで完走」だけに簡略化。
+- ドキュメント(README / AGENTS / rules / CLAUDE.md)を全体的に短縮。

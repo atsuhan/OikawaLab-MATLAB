@@ -1,66 +1,37 @@
 # OikawaLab Agent Rules
 
-Lab-Harness-Version: 1.0.0
+Lab-Harness-Version: 1.1.0
 
-このリポジトリで作業するすべてのAIエージェント(Claude Code / Codex 等)の共通ルールです。
-リポジトリ固有の契約は `docs/rules/project.md` を正本とします。
+すべてのAIエージェント(Claude Code / Codex 等)の共通ルール。リポジトリ固有の契約は `docs/rules/project.md`。
 
 ## MUST
 
-- 実験条件(サンプリング周波数、チャンネル対応、単位、校正値)、データ列の意味、受入条件、削除・上書きを伴う操作が曖昧なときは、**推測せず質問してから進む**。やむを得ず推測で埋めた箇所は必ず「推測」と明記する。
-- 測定生データ(`Input/` 配下、`.wav` / `.mat` 等の一次データ)を削除・上書き・変換で置換しない。派生データは別名・別フォルダで保存する。
-- 図の出力は必ず `ApplyFigureStyle` + `ExportFigure` を通す。`saveas` / `print` / 生の `exportgraphics` を直接使わない。
-- 検証していない項目をPASS、完了、確認済みと報告しない。未実行の検証は UNVERIFIED と明記する。
-- 実装後に受入条件や検証ゲートを緩めてPASS扱いしない。条件変更が必要なら理由を先に記録する。
-- 秘密情報、個人情報(被験者情報を含む)をcommitまたは外部サービスへ送信しない。
-- 既存のMilestone、受入条件、実験記録、decisionを、整理を理由に削除・要約上書きしない。訂正は追記で残す。
-- 復旧困難な削除、リセット、上書き、force push、本番・公開操作は明示的な承認なしに行わない。
-- モックやダミーの結果だけで完了扱いせず、実際に動く成果へつなげる。
+- 実験条件・データの意味・受入条件・削除操作が曖昧なら、推測せず質問してから進む。推測で埋めた箇所は「推測」と明記。
+- 生データ(`Input/` 配下)を削除・上書きしない。派生データは別名で保存。
+- 図は `ApplyFigureStyle` + `ExportFigure` を通す。
+- 未検証をPASS・完了と報告しない(UNVERIFIEDと明記)。受入条件を後から緩めない。
+- 秘密情報・個人情報をcommit・外部送信しない。
+- 実験記録・decision・Milestoneを削除や要約で上書きしない。訂正は追記。
+- 復旧困難な削除・force push・公開操作は承認なしに行わない。
 
 ## 質問の仕方
 
-- 質問はまとめて1回で行う。各質問に選択肢と推奨案を付ける。
-- subagentはユーザーへ直接質問できない。**質問リストを結果の冒頭で親へ返し、親(メイン会話)が AskUserQuestion で確認する。**
-- 質問しすぎない: コード規約・ファイル配置などリポジトリ内の文書で答えが出るものは、質問せず文書を読む。質問は文書で解決しない事項に限る。
-- 学生が「わからない」と答えた場合は、安全側の既定値と代替案を提示して選んでもらう。
+- まとめて1回、各質問に選択肢と推奨案を付ける。文書で答えが出るものは質問しない。
+- subagentは質問リストを親へ返し、親が AskUserQuestion で確認する。
 
-## Gitワークフロー
+## Git
 
-- 作業開始時に `git status` で現在ブランチと未コミット差分を確認し、既存の変更を壊さない。
-- mainへ直接コミットしない。作業ブランチ(`exp/<ID>-<slug>` または `feat/<ID>-<slug>`)を切る。
-- 標準完了範囲は、検証 → STATUS更新 → commit → push → **ready PR作成まで**。
-- **merge、ブランチ削除、force push、生データの削除・移動は行わず、人間の判断に委ねる。**
-- CIやテストのPASSをマージ必須条件にはしないが、失敗・未実行・既知問題はPRに明記する。
-- Codex利用時、`index.lock: Permission denied` はsandboxが `.git` をread-onlyにしている場合がある。`.codex/config.toml` のPermission Profileを確認する。
+- 作業開始時に `git status` 確認。mainへ直接コミットせず、`exp/` または `feat/` ブランチを切る。
+- 標準完了範囲: 検証 → STATUS更新 → commit → push → ready PR作成まで。
+- merge・ブランチ削除・force push・生データ操作は人間に委ねる。
 
 ## Research
 
-- 既存実装が現在も最適とは仮定しない。外部仕様、依存ツール、ライセンスが関係する場合は現在の情報を調査する。
-- 公式文書、一次資料(論文本文)、公式リポジトリを優先し、公開日・版・URLを記録する。
-- 論文の主張は本文を確認してから引用する。アブストラクトだけで断定しない。
-- 文献は `References/` の書式(references.bib + Notes/)へ整理する。
-
-## Agent運用
-
-- `professor`: 及川教授ペルソナ。研究方法論・音響理論・図の学術品質をゼミ質問形式でレビューする。実装しない。
-- `planner`: 実験タスクの目的、条件、受入条件、作業バッチを定義する。実装しない。
-- `researcher`: 文献・外部仕様をread-onlyで調査し、書誌情報と確認日を返す。
-- `builder`: 確定した範囲を実装し、関連検証まで行う。
-- `reviewer`: diff、規約、図規約、検証証拠をread-onlyで独立確認する。
-- `clerk`: STATUS生成、archive移動など判断を伴わない機械作業だけを行う。
-- ノイズの多いログ解析・長い実行はsubagentへ分離し、親へ要点だけ返す。
-
-## ルールの柔軟性
-
-- MUSTは安全・真実性・データ保全のため必須とする。
-- DEFAULTは通常方針であり、よりよい方法があれば理由を `docs/decisions/decisions.md` に残して変更できる。
-- CONSIDERは検討候補であり、採用義務はない。
-- 同じ摩擦や失敗が繰り返されたら、ルール・Skill・テストの改善案を出す。
+- 公式文書・一次資料を優先し、公開日・URLを記録。論文は本文を確認してから引用。
+- 文献は `References/`(references.bib + Notes/)へ整理。
 
 ## 文書と状態
 
-- 人間向けの現在地はルートの `STATUS.md`(status Skillで生成)。
-- エージェントの作業台帳は `docs/roadmap/MILESTONES.md`。
-- 長期的な技術判断は `docs/decisions/decisions.md` に追記で残す。方針を覆すときは旧記録を消さず、新しいdecisionから差し替えを明記する。
-- 完了したMilestoneは定期的に `docs/roadmap/archive/` へ移し、IDを再利用しない。
-- 一時ログや会話の要約をdocsへ蓄積しない。
+- 人間向け現在地: `STATUS.md`(status Skillで生成)。作業台帳: `docs/roadmap/MILESTONES.md`。
+- 技術判断: `docs/decisions/decisions.md` に追記。一時ログをdocsへ蓄積しない。
+- MUSTは必須。DEFAULTは理由をdecisionsに残せば変更可。CONSIDERは任意。
