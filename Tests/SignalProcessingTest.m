@@ -4,6 +4,16 @@ classdef SignalProcessingTest < matlab.unittest.TestCase
     % 「振幅既知の正弦波を入れたら既知の読みが返る」を固定し、
     % スケーリング規約 (窓補正・片側化) の破壊を検知する。
 
+    methods (TestClassSetup)
+        function addSampleCommonToPath(testCase)
+            thisDir = fileparts(mfilename('fullpath'));
+            commonDir = fullfile(fileparts(thisDir), 'Sample', ...
+                '20260101_Demo_残響時間解析', 'common');
+            testCase.applyFixture( ...
+                matlab.unittest.fixtures.PathFixture(commonDir));
+        end
+    end
+
     methods (Test)
 
         function sineSpectrumAmplitudeMatchesInput(testCase)

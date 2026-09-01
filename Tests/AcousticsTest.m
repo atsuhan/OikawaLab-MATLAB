@@ -1,5 +1,15 @@
 classdef AcousticsTest < matlab.unittest.TestCase
-    % AcousticsTest - 音響工学系関数の数値検証 (既知の正解値と突合)
+    % AcousticsTest - Sample内の音響関数の数値検証 (既知の正解値と突合)
+
+    methods (TestClassSetup)
+        function addSampleCommonToPath(testCase)
+            thisDir = fileparts(mfilename('fullpath'));
+            commonDir = fullfile(fileparts(thisDir), 'Sample', ...
+                '20260101_Demo_残響時間解析', 'common');
+            testCase.applyFixture( ...
+                matlab.unittest.fixtures.PathFixture(commonDir));
+        end
+    end
 
     methods (Test)
 

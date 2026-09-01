@@ -1,13 +1,8 @@
 function info = SetupProjectPaths(projectDir, varargin)
 %SetupProjectPaths - 「Functions + 当該実験のみ」に MATLAB path を整える
 %
-% 目的:
-%   Projects/ や Sample/ 配下には同名ファイル（Params.m・Proc01_*.m など）が
-%   複数の実験に存在するため、`addpath(genpath(pwd))` のようにリポジトリ全体を
-%   path に載せると、どの実験のファイルが解決されるかが不定になる。
-%   本関数は「Functions 全体 + 指定実験（+ 明示依存の実験フォルダ）だけを path に
-%   載せ、それ以外の Projects\ / Sample\ 配下パスを path から外す」ことで
-%   解決先を一意にする。
+% 複数実験に同名ファイル (Params.m 等) があるため、Functions + 指定実験だけを
+% path に載せ、他の Projects/Sample 配下を外して解決先を一意にする。
 %
 % 使い方:
 %   SetupProjectPaths(thisDir);                                   % 単独実験

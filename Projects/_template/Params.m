@@ -11,7 +11,6 @@ params.expectedFs = 48000;          % 期待サンプリング周波数 [Hz] (�
 params.calibrationPaPerUnit = NaN;  % 校正係数 [Pa/FS]。未校正なら NaN (±1のまま扱う)
 
 % --- 解析設定 ---
-params.windowType = 'hann';         % スペクトル解析の窓
 params.plotBandHz = [20 20000];     % 図の周波数表示範囲 [Hz]
 
 % --- 図 ---
