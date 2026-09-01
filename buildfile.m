@@ -15,7 +15,7 @@ checkTargets = [
     "Functions/**/*.m"
     "Tests/**/*.m"
     "Sample/**/*.m"
-    "Projects/_template/**/*.m"
+    "Projects/**/*.m"
 ];
 plan("check") = CodeIssuesTask(checkTargets, WarningThreshold = 0);
 

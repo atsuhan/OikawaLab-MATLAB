@@ -2,7 +2,7 @@
 
 > このファイルは `Tests/tools/GenFunctionsIndex.m` により生成されます。直接編集しないでください。
 
-Functions配下の関数: 17件 / H1欠落: 0件
+Functions配下の関数: 19件 / H1欠落: 0件
 
 ## Core
 
@@ -35,4 +35,11 @@ Functions配下の関数: 17件 / H1欠落: 0件
 | `ExportFigure` | 図をタイムスタンプ付きで Export フォルダへ書き出す | [source](../Functions/Plot/ExportFigure.m) |
 | `GetColorPalette` | 研究室標準のカラーパレット [N x 3] RGB(0-1) を返す | [source](../Functions/Plot/GetColorPalette.m) |
 | `GetFigureStylePreset` | 図スタイルプリセット定義の単一正本 | [source](../Functions/Plot/GetFigureStylePreset.m) |
+
+## Signal
+
+| Function | Summary | Source |
+|---|---|---|
+| `ComputeSpectrogram` | STFTパワースペクトログラムを計算する (Toolbox非依存) | [source](../Functions/Signal/ComputeSpectrogram.m) |
+| `GenerateWindow` | 窓関数と振幅補正係数を返す (Toolbox非依存の数式実装) | [source](../Functions/Signal/GenerateWindow.m) |
 

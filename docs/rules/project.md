@@ -15,7 +15,7 @@
 
 ## フォルダ
 
-- `Functions/` — 実験横断の汎用関数のみ(Core / IO / Plot)。変更時はTests/の更新必須。
+- `Functions/` — 実験横断の汎用関数のみ(Core / IO / Plot / Signal)。変更時はTests/の更新必須。
 - `Projects/` — 実験ごとの解析。学生の作業場。実験固有の関数は各実験の `common/` へ。
 - `Sample/` — お手本実験(音響解析の関数例もここの `common/` にある)。
 - `Tests/` `docs/` — 裏方。
