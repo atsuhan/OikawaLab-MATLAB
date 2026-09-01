@@ -10,7 +10,10 @@ function result = ComputeSpectrogram(signal, fs, opts)
 % 出力:
 %   result.timeSec [T x 1] フレーム中心時刻 [s]
 %   result.freqHz  [F x 1] 周波数 [Hz]
-%   result.powerDb [F x T] パワー [dB] (入力単位の2乗基準、10*log10)
+%   result.powerDb [F x T] パワー [dB re 入力単位^2] (10*log10)。
+%                  片側スペクトルだが負周波数分の係数2は掛けない。
+%                  DC/Nyquist の特別扱いもしない (可視化用の相対値。
+%                  絶対レベルの主張には校正と定義の再確認が必要)
 %   result.fs      double  サンプリング周波数 [Hz]
 arguments
     signal (:, 1) double {mustBeNonempty}
@@ -25,6 +28,10 @@ if isnan(opts.HopSize)
     hopSize = floor(frameSize / 2);
 else
     hopSize = round(opts.HopSize);
+    if hopSize < 1
+        error('ComputeSpectrogram:InvalidHopSize', ...
+            'HopSize は正の値で指定してください (指定値: %g)。', opts.HopSize);
+    end
 end
 
 numSamples = numel(signal);

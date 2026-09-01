@@ -1,4 +1,4 @@
-function SaveAudioFile(filePath, audioData, fs)
+function SaveAudioFile(filePath, audioData, fs, opts)
 % SaveAudioFile - 音声ファイルを書き出す (audiowrite ラッパー、クリップ検査つき)
 %
 % ±1 を超えるサンプルがあるとファイル形式によっては黙って歪むため、
@@ -8,10 +8,12 @@ function SaveAudioFile(filePath, audioData, fs)
 %   filePath  - 出力パス (.wav / .flac。親フォルダがなければ作成)
 %   audioData - [N x Ch] double、フルスケール±1
 %   fs        - サンプリング周波数 [Hz]
+%   opts.BitsPerSample - 量子化ビット数 [bit] (既定: 16)
 arguments
     filePath {mustBeTextScalar}
     audioData (:, :) double {mustBeNonempty}
     fs (1, 1) double {mustBePositive}
+    opts.BitsPerSample (1, 1) double {mustBeMember(opts.BitsPerSample, [8, 16, 24, 32])} = 16
 end
 
 peakValue = max(abs(audioData(:)));
@@ -23,5 +25,5 @@ end
 
 filePath = char(filePath);
 EnsureFolder(fileparts(filePath));
-audiowrite(filePath, audioData, round(fs));
+audiowrite(filePath, audioData, round(fs), 'BitsPerSample', opts.BitsPerSample);
 end

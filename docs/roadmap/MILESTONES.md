@@ -30,8 +30,11 @@
 
 ## 実験(例)
 
-- [ ] **E1-1** (最初の実験をここに追加する。new-experiment Skillが追記します) ｜優先:中｜依存:なし｜担当:未定
-  - 目的: 要確認
-  - 実験条件: fs=要確認, ch=要確認, 校正値=要確認
-  - 受け入れ条件: 要確認
-  - データ: 要確認
+- [ ] **E1-1** マイク5秒録音→スペクトログラム出力デモ ｜優先:中｜依存:なし｜担当:井上
+  - 目的: マイク録音→解析→図出力のパイプラインを規約に沿って構築するデモ
+  - 実験条件: fs=48000 Hz, ch=1 (mono), 校正値=未校正 (±1のまま)
+  - 受け入れ条件: Proc00で5秒録音がInput/に保存され、Runが完走して Export/ にスペクトログラムPNGとmanifestが生成される
+  - 検証: `matlab -batch "cd('Projects/20260901_マイク録音スペクトログラム'); Run"`
+  - データ: Projects/20260901_マイク録音スペクトログラム/Input/recording_*.wav
+  - メモ: 2026-09-01 プロジェクト作成。録音関数はcommon/RecordMicrophone.m(Functions未昇格)。
+  - メモ: 2026-09-01 実マイク録音でRun完走・Export生成を確認(受入条件充足)。チーム監査(reviewer/professor)を実施し、ComputeSpectrogram/GenerateWindowをFunctions/Signal/へ昇格、buildtool検査対象へProjects/**を追加、dB表記(re FS^2・未校正)明記、実fs返却・無音/クリップ警告、24bit保存、固定clim等を反映。残課題: 15kHz遮断の原因切り分け(対照録音)、測定条件(マイク型番・OS音声補正)の記録。

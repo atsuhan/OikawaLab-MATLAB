@@ -14,6 +14,13 @@ arguments
     windowLength (1, 1) double {mustBePositive, mustBeInteger}
 end
 
+if windowLength == 1
+    % L=1 では下式が 0/0 になるため単一点窓を直接返す
+    window = 1;
+    info = struct('amplitudeCorrection', 1, 'powerCorrection', 1);
+    return;
+end
+
 n = (0:windowLength - 1).';
 switch windowType
     case 'hann'
