@@ -19,7 +19,7 @@ params = Params();
 %% 保存 (生データは Input/ へ。既存ファイルは上書きしない命名)
 timeStamp = char(datetime('now', 'Format', 'yyyyMMdd-HHmmss'));
 outputPath = fullfile(thisDir, 'Input', ['recording_', timeStamp, '.wav']);
-SaveAudioFile(outputPath, audioData, fs);
+SaveAudioFile(outputPath, audioData, fs, 'BitsPerSample', params.recordBitsPerSample);
 fprintf('保存しました: %s (peak=%.3f)\n', outputPath, max(abs(audioData(:))));
 
 %% 波形の目視確認

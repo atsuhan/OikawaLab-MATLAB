@@ -37,3 +37,4 @@
   - 検証: `matlab -batch "cd('Projects/20260901_マイク録音スペクトログラム'); Run"`
   - データ: Projects/20260901_マイク録音スペクトログラム/Input/recording_*.wav
   - メモ: 2026-09-01 プロジェクト作成。録音関数はcommon/RecordMicrophone.m(Functions未昇格)。
+  - メモ: 2026-09-01 実マイク録音でRun完走・Export生成を確認(受入条件充足)。チーム監査(reviewer/professor)を実施し、ComputeSpectrogram/GenerateWindowをFunctions/Signal/へ昇格、buildtool検査対象へProjects/**を追加、dB表記(re FS^2・未校正)明記、実fs返却・無音/クリップ警告、24bit保存、固定clim等を反映。残課題: 15kHz遮断の原因切り分け(対照録音)、測定条件(マイク型番・OS音声補正)の記録。

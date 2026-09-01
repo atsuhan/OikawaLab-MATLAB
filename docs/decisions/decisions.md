@@ -20,3 +20,13 @@
 - テスト(AcousticsTest / SignalProcessingTest)は PathFixture でSample commonを参照し、カバレッジは維持。
 - Cache/RunCached は必須契約から任意の道具に格下げ。Proc番号規約は「Proc00=前準備、Proc01〜本線、Run.mで完走」だけに簡略化。
 - ドキュメント(README / AGENTS / rules / CLAUDE.md)を全体的に短縮。
+
+## 2026-09-01: ComputeSpectrogram / GenerateWindow を Functions/Signal/ へ昇格
+
+- マイク録音スペクトログラム実験(E1-1)がSampleの同2関数をコピー使用し「2実験以上で使用」の昇格条件を満たしたため、`Functions/Signal/` を新設して移動。数値検証は既存の `Tests/SignalProcessingTest.m`(正弦波での振幅・ピーク周波数一致)がそのままカバーする。
+- カテゴリ追加に伴い project.md のFunctions欄を (Core / IO / Plot / Signal) に更新。
+- 併せてチーム監査(reviewer/professor)の指摘を反映:
+  - `buildtool check` の対象に `Projects/**` を追加(新規実験コードが検査対象外だった)。
+  - `powerDb` の定義をヘッダに明記: dB re 入力単位^2、片側スペクトルの係数2なし、可視化用の相対値。図のカラーバーも「dB re FS^2 (未校正)」表記に統一。本実験は動作デモ目的のため絶対校正は行わない(定量利用時に再検討)。
+  - `SaveAudioFile` に BitsPerSample オプションを追加(既定16bit、録音実験は24bit保存)。
+  - `RecordMicrophone` はデバイス実fsを返し、fs不一致・無音・クリップを警告する。

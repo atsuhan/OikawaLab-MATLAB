@@ -41,6 +41,11 @@ for k = 1:numFiles
     filePath = fullfile(inputFiles(k).folder, inputFiles(k).name);
     [audioData, fs] = LoadAudioFile(filePath, ...
         'CalibrationPaPerUnit', params.calibrationPaPerUnit);
+    if fs ~= params.expectedFs
+        warning('Proc01:FsMismatch', ...
+            '%s: fs=%d が Params.expectedFs=%d と一致しません。そのまま解析します。', ...
+            inputFiles(k).name, fs, params.expectedFs);
+    end
     data.audioList{k} = audioData;
     data.fsList(k) = fs;
     data.nameList{k} = inputFiles(k).name;

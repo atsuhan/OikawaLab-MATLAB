@@ -27,13 +27,12 @@ for k = 1:numel(analyzed.data.spectrograms)
     fig = figure('Visible', 'off');
     imagesc(spec.timeSec, spec.freqHz, spec.powerDb);
     axis xy;
-    colormap(GetColorPalette('sequential'));
-    maxDb = max(spec.powerDb(:));
-    clim([maxDb - params.dynamicRangeDb, maxDb]);
+    colormap(feval(params.colormapName, 256));
+    clim(params.climDb);
     ylim([max(params.plotBandHz(1), spec.freqHz(1)), ...
         min(params.plotBandHz(2), spec.freqHz(end))]);
     colorBar = colorbar;
-    colorBar.Label.String = 'パワー [dB]';
+    colorBar.Label.String = 'パワー [dB re FS^2] (未校正)';
     xlabel('時間 [s]');
     ylabel('周波数 [Hz]');
     title(baseName, 'Interpreter', 'none');

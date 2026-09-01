@@ -19,7 +19,8 @@ params.recordBitsPerSample = 24;    % 量子化ビット数 [bit]
 params.frameSize = 2048;            % STFTフレーム長 [samples]
 params.hopSize = 512;               % ホップ長 [samples]
 params.windowType = 'hann';         % 窓関数
-params.dynamicRangeDb = 80;         % 表示ダイナミックレンジ [dB] (最大値からの幅)
+params.climDb = [-120 -40];         % 色スケール固定範囲 [dB re FS^2] (図間で色の意味を揃える)
+params.colormapName = 'turbo';      % スペクトログラムのカラーマップ (MATLAB標準名)
 
 % --- 解析設定 ---
 params.plotBandHz = [20 20000];     % 図の周波数表示範囲 [Hz]

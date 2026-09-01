@@ -16,7 +16,7 @@
 | マイク | PC既定入力デバイス (型番未記録) |
 | サンプリング周波数 | 48000 Hz |
 | 校正値 | 未校正 (フルスケール±1のまま扱う) |
-| その他 | 録音時間 5 s / mono / 24 bit |
+| その他 | 録音時間 5 s / mono / 24 bit保存。OSの音声補正(ノイズ抑制/AGC)の有無は未確認 |
 
 ## データの中身(Input契約)
 
@@ -39,9 +39,11 @@ Run                 % Proc01〜03 を一気通貫実行 (ヘッドレス可)
 ## 出力(Output契約)
 
 - `Cache/Proc01/prepared.mat` — 読み込み済み波形 (`data.audioList {1xK}` 各 `[N x Ch]` フルスケール±1, `data.fsList [1 x K]` Hz, `data.nameList {1xK}`)
-- `Cache/Proc02/spectrogram.mat` — スペクトログラム (`data.spectrograms {1xK}` 各 struct: `timeSec [T x 1]` s / `freqHz [F x 1]` Hz / `powerDb [F x T]` dB / `fs` Hz)
+- `Cache/Proc02/spectrogram.mat` — スペクトログラム (`data.spectrograms {1xK}` 各 struct: `timeSec [T x 1]` s / `freqHz [F x 1]` Hz / `powerDb [F x T]` dB re FS^2(未校正・片側係数2なしの相対値) / `fs` Hz)
 - `Export/spectrogram_*.png` + `Export/manifest.json` — 図とパラメータ対応の記録
 
 ## 結果メモ(追記式)
 
 - 2026-09-01: プロジェクト作成。録音実行はまだ(要マイク環境)。
+- 2026-09-01: ⚠️訂正: 同日中に実マイク録音を実施(recording_20260901-134732.wav、peak=0.045・rms -53dBFSと小音量)。スペクトログラム出力を確認。15kHz以上が無音だが、原因(マイクのローパス / OSのリサンプル / ノイズ抑制)は未切り分け。切り分けには既知フルバンド信号の対照録音が必要。
+- 2026-09-01: チーム監査を実施し指摘を反映(dB表記の基準明記、固定clim [-120,-40] dB、カラーマップturbo、24bit保存、実fs返却・無音/クリップ警告)。詳細は docs/decisions/decisions.md 参照。
